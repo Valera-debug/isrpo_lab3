@@ -1,0 +1,37 @@
+<idea-plugin>
+    <id>com.example.timetracker</id>
+    <name>Time Tracker for CLion</name>
+    <vendor>Valery Maximov</vendor>
+    <description>Shows project working time and build/run counters in the status bar.</description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+        <statusBarWidgetFactory id="TimeTrackerWidget"
+                                implementation="com.example.timetracker.TimeTrackerWidgetFactory"/>
+
+        <postStartupActivity implementation="com.example.timetracker.TimeTrackerStartup"/>
+    </extensions>
+
+
+    <projectListeners>
+        <listener class="com.example.timetracker.RunListener"
+                  topic="com.intellij.execution.ExecutionListener"/>
+    </projectListeners>
+
+
+    <applicationListeners>
+        <listener class="com.example.timetracker.BuildActionListener"
+                  topic="com.intellij.openapi.actionSystem.ex.AnActionListener"/>
+    </applicationListeners>
+
+    <actions>
+        <action id="TimeTracker.Reset"
+                class="com.example.timetracker.ResetStatsAction"
+                text="Reset Time Tracker Statistics"
+                description="Reset working time, build and run counters">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
